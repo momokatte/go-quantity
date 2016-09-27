@@ -85,7 +85,7 @@ func MakeSIUnitScales() (scales []Scale) {
 		Scale{9, big.NewRat(1e9, 1), "giga", "G"},
 		Scale{6, big.NewRat(1e6, 1), "mega", "M"},
 		Scale{3, big.NewRat(1e3, 1), "kilo", "k"},
-		Scale{0, big.NewRat(0, 1), "", ""},
+		Scale{0, nil, "", ""},
 		Scale{-3, big.NewRat(1, 1e3), "milli", "m"},
 		Scale{-6, big.NewRat(1, 1e6), "micro", "µ"},
 		Scale{-9, big.NewRat(1, 1e9), "nano", "n"},

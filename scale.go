@@ -18,7 +18,7 @@ type ScaledFloat struct {
 	SigDigits int
 }
 
-func (sf *ScaledFloat) String() string {
+func (sf ScaledFloat) String() string {
 	sff, _ := sf.Float.Float64()
 	p := "%g%s"
 	if sf.SigDigits > 0 {
@@ -33,7 +33,7 @@ type ScaledRat struct {
 	SigDigits int
 }
 
-func (sr *ScaledRat) String() string {
+func (sr ScaledRat) String() string {
 	srf, _ := sr.Rat.Float64()
 	p := "%g%s"
 	if sr.SigDigits > 0 {
@@ -72,9 +72,11 @@ func ScaleInt(x int64, scale Scale) (sr ScaledRat) {
 func ScaleBigRat(x *big.Rat, scale Scale) (sr ScaledRat) {
 	z := &big.Rat{}
 	z.Set(x)
-	if scale.Exponent != 0 {
+	if scale.Value != nil && scale.Value.Num().Int64() != 0 {
 		// shift
-		z.Mul(z, scale.Value.Inv(nil))
+		y := &big.Rat{}
+		y.Inv(scale.Value)
+		z.Mul(z, y)
 	}
 	sr.Rat = *z
 	sr.Scale = scale
